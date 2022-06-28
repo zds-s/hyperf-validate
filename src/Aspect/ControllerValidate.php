@@ -59,6 +59,8 @@ class ControllerValidate extends AbstractAspect
         {
             $this->check($method,$current_object);
         }
+
+        return $proceedingJoinPoint->process();
     }
 
     /**
