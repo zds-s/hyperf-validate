@@ -53,11 +53,15 @@ class ControllerValidate extends AbstractAspect
         $current_object = $proceedingJoinPoint->getInstance();
         foreach ($annotation_data->class as $class)
         {
-            $this->check($class,$current_object);
+            if ($class instanceof Validate) {
+                $this->check($class, $current_object);
+            }
         }
         foreach ($annotation_data->method as $method)
         {
-            $this->check($method,$current_object);
+            if ($method instanceof Validate) {
+                $this->check($method, $current_object);
+            }
         }
 
         return $proceedingJoinPoint->process();
