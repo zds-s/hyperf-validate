@@ -14,12 +14,7 @@ jobs:
       matrix:
         os: [ ubuntu-latest ]
         php-version: [ '7.3', '7.4', '8.0' ]
-        engine: [  'swoole', 'swow' ]
-        exclude:
-          - php-version: '7.3'
-            engine: 'swow'
-          - php-version: '7.4'
-            engine: 'swow'
+        engine: [  'swoole' ]
       max-parallel: 5
     steps:
       - name: Checkout
@@ -48,22 +43,6 @@ jobs:
           sudo make install
           sudo sh -c "echo extension=swoole > /etc/php/${{ matrix.php-version }}/cli/conf.d/swoole.ini"
           php --ri swoole
-      - name: Setup Swow
-        if: ${{ matrix.engine == 'swow' }}
-        run: |
-          cd /tmp
-          wget https://github.com/swow/swow/archive/"${SWOW_VERSION}".tar.gz -O swow.tar.gz
-          mkdir -p swow
-          tar -xf swow.tar.gz -C swow --strip-components=1
-          rm swow.tar.gz
-          cd swow/ext || exit
-
-          phpize
-          ./configure --enable-debug
-          make -j "$(nproc)"
-          sudo make install
-          sudo sh -c "echo extension=swow > /etc/php/${{ matrix.php-version }}/cli/conf.d/swow.ini"
-          php --ri swow
       - name: Setup Packages
         run: composer update -o --no-scripts
       - name: Run Test Cases
