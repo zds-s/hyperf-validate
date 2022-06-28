@@ -8,9 +8,18 @@ use DeathSatan\Hyperf\Validate\Lib\AbstractValidate as BaseValidate;
 class %CLASS% extends BaseValidate
 {
     /**
-    * @var array 自定义场景
-    */
+     * @var array 自定义场景
+     */
     protected $scenes =[];
+
+    /**
+     * 规则
+     * @return array
+     */
+    protected function rules():array
+    {
+        return [];
+    }
 
     /**
      * 自定义错误消息
@@ -26,15 +35,6 @@ class %CLASS% extends BaseValidate
      * @return array
      */
     protected function attributes():array
-    {
-        return [];
-    }
-
-    /**
-     * 规则
-     * @return array
-     */
-    protected function rules():array
     {
         return [];
     }

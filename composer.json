@@ -20,7 +20,7 @@
     "require": {
         "php": ">=7.3",
         "hyperf/db-connection": "^2.2",
-        "hyperf/di": "2.2.*",
+        "hyperf/di": "^2.2",
         "hyperf/framework": "2.2.*",
         "hyperf/validation": "^2.2"
     },
