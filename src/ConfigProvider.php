@@ -43,6 +43,14 @@ class ConfigProvider
                     ]
                 ],
             ],
+            'publish'=>[
+                [
+                    'id'=>'death-satan/hyperf-validate',
+                    'description'=>'validate of config file',
+                    'source'=>__DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'publish'.DIRECTORY_SEPARATOR.'config.php',
+                    'destination'=>BASE_PATH.DIRECTORY_SEPARATOR.'config'.DIRECTORY_SEPARATOR.'autoload'.DIRECTORY_SEPARATOR.'validate.php'
+                ]
+            ]
         ];
     }
 }

@@ -2,9 +2,15 @@
 
 namespace DeathSatan\Hyperf\Validate\Aspect;
 
+use DeathSatan\Hyperf\Validate\Annotation\Validate;
+use DeathSatan\Hyperf\Validate\Contract\CustomHandle;
+use DeathSatan\Hyperf\Validate\Driver\RequestHandle;
 use DeathSatan\Hyperf\Validate\Exceptions\ValidateException;
 use DeathSatan\Hyperf\Validate\Lib\AbstractValidate;
+use Hyperf\Contract\ConfigInterface;
 use Hyperf\Di\Container;
+use Hyperf\Utils\ApplicationContext;
+use Hyperf\Utils\Arr;
 use Psr\Container\ContainerInterface;
 use Hyperf\Di\Aop\AbstractAspect;
 use Hyperf\Di\Aop\ProceedingJoinPoint;
@@ -22,6 +28,7 @@ class ControllerValidate extends AbstractAspect
 
     protected $response;
 
+    protected $config;
     public function __construct(
         ContainerInterface $container,
         RequestInterface $request,
@@ -34,7 +41,7 @@ class ControllerValidate extends AbstractAspect
     }
 
     public $annotations = [
-        \DeathSatan\Hyperf\Validate\Annotation\Validate::class
+       Validate::class
     ];
 
     /**
@@ -56,38 +63,50 @@ class ControllerValidate extends AbstractAspect
 
     /**
      * 验证处理
-     * @param  $validate
+     * @param Validate $validate
      * @param object $current
      * @return void
      * @throws ValidateException
      */
-    protected function check($validate,object $current):void
+    protected function check(Validate $validate, object $current):void
     {
-        $on_handle = $validate->on_handle;
         $scene = $validate->scene;
         $validate = $this->makeValidate($validate->validate);
-        $data = $this->handleData($on_handle,$current);
+        $data = $this->handleData($validate,$current,$scene);
         if ($scene!==null)
         {
             $validate = $validate->scene($scene);
         }
-        $validate->make($data,true);
+        $validate->make($data);
     }
 
-    //取要验证的数据
-    protected function handleData($on_handle, $current)
+    /**
+     * 让hyperf container来管理handle
+     * @param $handle
+     * @return CustomHandle
+     */
+    protected function parseHandle($handle):CustomHandle
     {
-        if ($on_handle===null)
-        {
-            return $this->request->all();
-        }
-        if (!method_exists($current,$current))
-        {
-            throw new \RuntimeException('No '.$on_handle.' method found in this class');
-        }
-        return call_user_func_array([
-            $current,$on_handle
-        ],[]);
+        return ApplicationContext::getContainer()->make($handle);
+    }
+
+    /**
+     * 获取要验证的数据
+     * @param AbstractValidate $validate
+     * @param object $current
+     * @return array
+     */
+    protected function handleData(AbstractValidate $validate,object $current,?string $scene):array
+    {
+        $customHandle = $this->config('customHandle',\DeathSatan\Hyperf\Validate\Driver\RequestHandle::class);
+        $handle = $this->parseHandle($customHandle);
+        return $handle->provide($current,$validate,$scene);
+    }
+
+    protected function config(string $key = null,$default = null)
+    {
+        $config = config('validate');
+        return $key===null?$config:Arr::get($config,$key,$default);
     }
 
     /**

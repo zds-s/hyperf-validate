@@ -4,7 +4,6 @@ namespace DeathSatan\Hyperf\Validate\Annotation;
 
 use Hyperf\Di\Annotation\AbstractAnnotation;
 use Hyperf\Di\Exception\NotFoundException;
-use Hyperf\Utils\ApplicationContext;
 
 /**
  * @Annotation
@@ -22,13 +21,6 @@ class Validate extends AbstractAnnotation
      */
     public $scene = null;
 
-    /**
-     * 自定义提供验证数据方法
-     * 为当前类的公共静态方法名称 如果设置了该项
-     * 则会以 $controller->{$on_handle}()的数据为验证数据
-     * @var string
-     */
-    public $on_handle = null;
 
     /**
      * @throws NotFoundException
