@@ -13,7 +13,7 @@ jobs:
     strategy:
       matrix:
         os: [ ubuntu-latest ]
-        php-version: [ '7.3', '7.4', '8.0' ]
+        php-version: [ '7.4', '8.0' ]
         engine: [  'swoole' ]
       max-parallel: 5
     steps:
@@ -50,3 +50,5 @@ jobs:
           vendor/bin/php-cs-fixer fix --dry-run
           composer analyse
           composer test
+      - name: Run phpunit
+          vendor/bin/phpunit
