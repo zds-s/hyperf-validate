@@ -2,11 +2,9 @@
 
 declare(strict_types=1);
 /**
- * This file is part of Hyperf.
+ * This file is part of Hyperf Extend.
  *
- * @link     https://www.hyperf.io
- * @document https://hyperf.wiki
- * @contact  group@hyperf.io
- * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
+ * @link     https://www.cnblogs.com/death-satan
+ * @license  https://github.com/Death-Satan/hyperf-validate
  */
 require_once dirname(dirname(__FILE__)) . '/vendor/autoload.php';

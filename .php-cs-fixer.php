@@ -1,12 +1,10 @@
 <?php
 
 $header = <<<'EOF'
-This file is part of Hyperf.
+This file is part of Hyperf Extend.
 
-@link     https://www.hyperf.io
-@document https://hyperf.wiki
-@contact  group@hyperf.io
-@license  https://github.com/hyperf/hyperf/blob/master/LICENSE
+@link     https://www.cnblogs.com/death-satan
+@license  https://github.com/Death-Satan/hyperf-validate
 EOF;
 
 return (new PhpCsFixer\Config())

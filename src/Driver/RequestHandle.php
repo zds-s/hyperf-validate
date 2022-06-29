@@ -1,5 +1,12 @@
 <?php
 
+declare(strict_types=1);
+/**
+ * This file is part of Hyperf Extend.
+ *
+ * @link     https://www.cnblogs.com/death-satan
+ * @license  https://github.com/Death-Satan/hyperf-validate
+ */
 namespace DeathSatan\Hyperf\Validate\Driver;
 
 use DeathSatan\Hyperf\Validate\Lib\AbstractValidate;
@@ -7,7 +14,7 @@ use Hyperf\HttpServer\Contract\RequestInterface;
 use Hyperf\HttpServer\Contract\ResponseInterface;
 
 /**
- * 自定义默认数据获取器
+ * 自定义默认数据获取器.
  */
 class RequestHandle implements \DeathSatan\Hyperf\Validate\Contract\CustomHandle
 {
@@ -17,14 +24,14 @@ class RequestHandle implements \DeathSatan\Hyperf\Validate\Contract\CustomHandle
 
     public function __construct(
         RequestInterface $request,
-        ResponseInterface $response)
-    {
+        ResponseInterface $response
+    ) {
         $this->request = $request;
         $this->response = $response;
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function provide(object $current, AbstractValidate $validate, string $scene = null): array
     {

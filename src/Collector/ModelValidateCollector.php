@@ -1,8 +1,13 @@
 <?php
 
-
+declare(strict_types=1);
+/**
+ * This file is part of Hyperf Extend.
+ *
+ * @link     https://www.cnblogs.com/death-satan
+ * @license  https://github.com/Death-Satan/hyperf-validate
+ */
 namespace DeathSatan\Hyperf\Validate\Collector;
-
 
 use Hyperf\Di\MetadataCollector;
 use Hyperf\Utils\ApplicationContext;
@@ -24,7 +29,8 @@ class ModelValidateCollector extends MetadataCollector
         static::$container[$class][] = $value;
     }
 
-    public static function result() {
+    public static function result()
+    {
         if (count(static::$result) == 0) {
             static::parseValidate();
         }
@@ -33,13 +39,13 @@ class ModelValidateCollector extends MetadataCollector
 
     public static function parseValidate()
     {
-        foreach(static::list() as $class => $modelValidate) {
+        foreach (static::list() as $class => $modelValidate) {
             $result = [];
-            foreach($modelValidate as $validate) {
+            foreach ($modelValidate as $validate) {
                 $result[] = [
                     'validate' => static::buildValidate($validate->validate),
                     'scene' => $validate->scene,
-                    'event' => explode(',',$validate->event)
+                    'event' => explode(',', $validate->event),
                 ];
             }
             static::$result[$class] = $result;

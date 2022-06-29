@@ -1,26 +1,35 @@
 <?php
 
+declare(strict_types=1);
+/**
+ * This file is part of Hyperf Extend.
+ *
+ * @link     https://www.cnblogs.com/death-satan
+ * @license  https://github.com/Death-Satan/hyperf-validate
+ */
 namespace DeathSatan\Hyperf\Validate\Aspect;
 
 use DeathSatan\Hyperf\Validate\Annotation\Validate;
 use DeathSatan\Hyperf\Validate\Contract\CustomHandle;
-use DeathSatan\Hyperf\Validate\Driver\RequestHandle;
 use DeathSatan\Hyperf\Validate\Exceptions\ValidateException;
 use DeathSatan\Hyperf\Validate\Lib\AbstractValidate;
-use Hyperf\Contract\ConfigInterface;
+use Hyperf\Di\Aop\AbstractAspect;
+use Hyperf\Di\Aop\ProceedingJoinPoint;
 use Hyperf\Di\Container;
+use Hyperf\HttpServer\Contract\RequestInterface;
+use Hyperf\HttpServer\Contract\ResponseInterface;
 use Hyperf\Utils\ApplicationContext;
 use Hyperf\Utils\Arr;
 use Psr\Container\ContainerInterface;
-use Hyperf\Di\Aop\AbstractAspect;
-use Hyperf\Di\Aop\ProceedingJoinPoint;
-use Hyperf\HttpServer\Contract\RequestInterface;
-use Hyperf\HttpServer\Contract\ResponseInterface;
 
 class ControllerValidate extends AbstractAspect
 {
+    public $annotations = [
+        Validate::class,
+    ];
+
     /**
-     * @var ContainerInterface|Container
+     * @var Container|ContainerInterface
      */
     protected $container;
 
@@ -29,20 +38,16 @@ class ControllerValidate extends AbstractAspect
     protected $response;
 
     protected $config;
+
     public function __construct(
         ContainerInterface $container,
         RequestInterface $request,
         ResponseInterface $response
-                                )
-    {
+    ) {
         $this->container = $container;
         $this->request = $request;
         $this->response = $response;
     }
-
-    public $annotations = [
-       Validate::class
-    ];
 
     /**
      * @throws ValidateException
@@ -51,14 +56,12 @@ class ControllerValidate extends AbstractAspect
     {
         $annotation_data = $proceedingJoinPoint->getAnnotationMetadata();
         $current_object = $proceedingJoinPoint->getInstance();
-        foreach ($annotation_data->class as $class)
-        {
+        foreach ($annotation_data->class as $class) {
             if ($class instanceof Validate) {
                 $this->check($class, $current_object);
             }
         }
-        foreach ($annotation_data->method as $method)
-        {
+        foreach ($annotation_data->method as $method) {
             if ($method instanceof Validate) {
                 $this->check($method, $current_object);
             }
@@ -68,59 +71,49 @@ class ControllerValidate extends AbstractAspect
     }
 
     /**
-     * 验证处理
-     * @param Validate $validate
-     * @param object $current
-     * @return void
+     * 验证处理.
      * @throws ValidateException
      */
-    protected function check(Validate $validate, object $current):void
+    protected function check(Validate $validate, object $current): void
     {
         $scene = $validate->scene;
         $validate = $this->makeValidate($validate->validate);
-        $data = $this->handleData($validate,$current,$scene);
-        if ($scene!==null)
-        {
+        $data = $this->handleData($validate, $current, $scene);
+        if ($scene !== null) {
             $validate = $validate->scene($scene);
         }
         $validate->make($data);
     }
 
     /**
-     * 让hyperf container来管理handle
+     * 让hyperf container来管理handle.
      * @param $handle
-     * @return CustomHandle
      */
-    protected function parseHandle($handle):CustomHandle
+    protected function parseHandle($handle): CustomHandle
     {
         return ApplicationContext::getContainer()->make($handle);
     }
 
     /**
-     * 获取要验证的数据
-     * @param AbstractValidate $validate
-     * @param object $current
-     * @return array
+     * 获取要验证的数据.
      */
-    protected function handleData(AbstractValidate $validate,object $current,?string $scene):array
+    protected function handleData(AbstractValidate $validate, object $current, ?string $scene): array
     {
-        $customHandle = $this->config('customHandle',\DeathSatan\Hyperf\Validate\Driver\RequestHandle::class);
+        $customHandle = $this->config('customHandle', \DeathSatan\Hyperf\Validate\Driver\RequestHandle::class);
         $handle = $this->parseHandle($customHandle);
-        return $handle->provide($current,$validate,$scene);
+        return $handle->provide($current, $validate, $scene);
     }
 
-    protected function config(string $key = null,$default = null)
+    protected function config(string $key = null, $default = null)
     {
         $config = config('validate');
-        return $key===null?$config:Arr::get($config,$key,$default);
+        return $key === null ? $config : Arr::get($config, $key, $default);
     }
 
     /**
-     * 生成验证器
-     * @param string $validate
-     * @return AbstractValidate
+     * 生成验证器.
      */
-    protected function makeValidate(string $validate):AbstractValidate
+    protected function makeValidate(string $validate): AbstractValidate
     {
         return make($validate);
     }

@@ -1,5 +1,12 @@
 <?php
 
+declare(strict_types=1);
+/**
+ * This file is part of Hyperf Extend.
+ *
+ * @link     https://www.cnblogs.com/death-satan
+ * @license  https://github.com/Death-Satan/hyperf-validate
+ */
 namespace DeathSatan\Hyperf\Validate\Annotation;
 
 use Hyperf\Di\Annotation\AbstractAnnotation;
@@ -19,8 +26,7 @@ class Validate extends AbstractAnnotation
     /**
      * @var string 场景名
      */
-    public $scene = null;
-
+    public $scene;
 
     /**
      * @throws NotFoundException
@@ -29,8 +35,7 @@ class Validate extends AbstractAnnotation
     {
         $formattedValue = $this->formatParams($value);
         foreach ($formattedValue as $key => $val) {
-            if ($key === 'validate')
-            {
+            if ($key === 'validate') {
                 $this->checkValidate($val);
             }
             if (property_exists($this, $key)) {
@@ -40,14 +45,14 @@ class Validate extends AbstractAnnotation
     }
 
     /**
-     * 检查validate
+     * 检查validate.
+     * @param mixed $val
      * @throws NotFoundException
      */
     protected function checkValidate($val)
     {
-        if (!class_exists($val))
-        {
-            throw new NotFoundException('this is Validate Class['.$val.'] Not found');
+        if (! class_exists($val)) {
+            throw new NotFoundException('this is Validate Class[' . $val . '] Not found');
         }
     }
 }

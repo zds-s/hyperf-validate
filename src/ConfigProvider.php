@@ -2,12 +2,10 @@
 
 declare(strict_types=1);
 /**
- * This file is part of Hyperf.
+ * This file is part of Hyperf Extend.
  *
- * @link     https://www.hyperf.io
- * @document https://doc.hyperf.io
- * @contact  group@hyperf.io
- * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
+ * @link     https://www.cnblogs.com/death-satan
+ * @license  https://github.com/Death-Satan/hyperf-validate
  */
 namespace DeathSatan\Hyperf\Validate;
 
@@ -22,35 +20,34 @@ class ConfigProvider
     {
         return [
             'dependencies' => [
-
             ],
             'commands' => [
-                ValidateCommand::class
+                ValidateCommand::class,
             ],
-            'listeners'=>[
-                ModelValidateLister::class
+            'listeners' => [
+                ModelValidateLister::class,
             ],
-            'aspects' =>[
-                ControllerValidate::class
+            'aspects' => [
+                ControllerValidate::class,
             ],
             'annotations' => [
                 'scan' => [
                     'paths' => [
                         __DIR__,
                     ],
-                    'collectors'=>[
-                        ModelValidateCollector::class
-                    ]
+                    'collectors' => [
+                        ModelValidateCollector::class,
+                    ],
                 ],
             ],
-            'publish'=>[
+            'publish' => [
                 [
-                    'id'=>'death-satan/hyperf-validate',
-                    'description'=>'validate of config file',
-                    'source'=>__DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'publish'.DIRECTORY_SEPARATOR.'config.php',
-                    'destination'=>BASE_PATH.DIRECTORY_SEPARATOR.'config'.DIRECTORY_SEPARATOR.'autoload'.DIRECTORY_SEPARATOR.'validate.php'
-                ]
-            ]
+                    'id' => 'death-satan/hyperf-validate',
+                    'description' => 'validate of config file',
+                    'source' => __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'publish' . DIRECTORY_SEPARATOR . 'config.php',
+                    'destination' => BASE_PATH . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR . 'autoload' . DIRECTORY_SEPARATOR . 'validate.php',
+                ],
+            ],
         ];
     }
 }
