@@ -51,4 +51,5 @@ jobs:
           composer analyse
           composer test
       - name: Run phpunit
+        run: |
           vendor/bin/phpunit
