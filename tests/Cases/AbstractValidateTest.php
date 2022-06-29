@@ -1,25 +1,35 @@
 <?php
 
+declare(strict_types=1);
+/**
+ * This file is part of Hyperf Extend.
+ *
+ * @link     https://www.cnblogs.com/death-satan
+ * @license  https://github.com/Death-Satan/hyperf-validate
+ */
 namespace HyperfTest\Cases;
 
 use DeathSatan\Hyperf\Validate\Lib\AbstractValidate;
 use Hyperf\Contract\ValidatorInterface;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class AbstractValidateTest extends AbstractTestCase
 {
-    protected function getValidate()
+    protected function tearDown(): void
     {
-       return \Mockery::mock(AbstractValidate::class);
+        \Mockery::close();
     }
 
     public function testAttributes()
     {
-        $this->assertClassHasAttribute('scenes',AbstractValidate::class);
-        $this->assertClassHasAttribute('scene',AbstractValidate::class);
-        $this->assertClassHasAttribute('validateFactory',AbstractValidate::class);
-        $this->assertClassHasAttribute('eventDispatcher',AbstractValidate::class);
+        $this->assertClassHasAttribute('scenes', AbstractValidate::class);
+        $this->assertClassHasAttribute('scene', AbstractValidate::class);
+        $this->assertClassHasAttribute('validateFactory', AbstractValidate::class);
+        $this->assertClassHasAttribute('eventDispatcher', AbstractValidate::class);
     }
-
 
     public function testFunction()
     {
@@ -29,33 +39,31 @@ class AbstractValidateTest extends AbstractTestCase
         $validate->allows()
             ->scene($testValue)->andReturnSelf();
 
-        $this->assertEquals($validate->scene($testValue),$validate);
+        $this->assertEquals($validate->scene($testValue), $validate);
 
         $validateValue = [
-            'test'=>'test'
+            'test' => 'test',
         ];
         $validate->allows()
-            ->make($validateValue,false)
+            ->make($validateValue, false)
             ->andReturn(\Mockery::mock(ValidatorInterface::class));
 
-        $this->assertTrue( $validate->make($validateValue,false) instanceof ValidatorInterface);
-
+        $this->assertTrue($validate->make($validateValue, false) instanceof ValidatorInterface);
 
         $this->expectException(\DeathSatan\Hyperf\Validate\Exceptions\ValidateException::class);
         $exceptionValue = [
-            'test'=>'demo'
+            'test' => 'demo',
         ];
         $validate->allows()
-            ->make($exceptionValue,true)
+            ->make($exceptionValue, true)
             ->andThrow(
                 \Mockery::mock(\DeathSatan\Hyperf\Validate\Exceptions\ValidateException::class)
             );
-        $validate->make($exceptionValue,true);
-
+        $validate->make($exceptionValue, true);
     }
 
-    protected function tearDown(): void
+    protected function getValidate()
     {
-        \Mockery::close();
+        return \Mockery::mock(AbstractValidate::class);
     }
 }
