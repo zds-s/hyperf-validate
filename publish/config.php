@@ -1,6 +1,16 @@
 <?php
+
+declare(strict_types=1);
+/**
+ * This file is part of Hyperf.
+ *
+ * @link     https://www.hyperf.io
+ * @document https://hyperf.wiki
+ * @contact  group@hyperf.io
+ * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
+ */
 return [
-    /**
+    /*
      * --------------------------------------------------------------------------------
      * 自定义数据提供者.
      * 如果你想自己向验证器提供数据，那么可以尝试修改这个选项
@@ -9,5 +19,5 @@ return [
      * 只有这样它才不会抛出异常.
      * --------------------------------------------------------------------------------
      */
-    'customHandle'=>\DeathSatan\Hyperf\Validate\Driver\RequestHandle::class,
+    'customHandle' => \DeathSatan\Hyperf\Validate\Driver\RequestHandle::class,
 ];
