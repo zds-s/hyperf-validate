@@ -40,7 +40,7 @@ class ControllerValidate extends AbstractAspect
         $this->response = $response;
     }
 
-    public $annotations = [
+    public array $annotations = [
        Validate::class
     ];
 
