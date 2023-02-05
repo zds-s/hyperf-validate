@@ -33,13 +33,11 @@ class ControllerValidate extends AbstractAspect
     /**
      * @var Container|ContainerInterface
      */
-    protected $container;
+    protected Container|ContainerInterface $container;
 
-    protected $request;
+    protected RequestInterface $request;
 
-    protected $response;
-
-    protected $config;
+    protected ResponseInterface $response;
 
     public function __construct(
         ContainerInterface $container,
@@ -101,9 +99,11 @@ class ControllerValidate extends AbstractAspect
      */
     protected function handleData(AbstractValidate $validate, object $current, ?string $scene): array
     {
-        $customHandle = $this->config('customHandle', \DeathSatan\Hyperf\Validate\Driver\RequestHandle::class);
-        $handle = $this->parseHandle($customHandle);
-        return $handle->provide($current, $validate, $scene);
+        return $this
+            ->parseHandle(
+                $this->config('customHandle', \DeathSatan\Hyperf\Validate\Driver\RequestHandle::class)
+            )
+            ->provide($current, $validate, $scene);
     }
 
     protected function config(string $key = null, $default = null)
