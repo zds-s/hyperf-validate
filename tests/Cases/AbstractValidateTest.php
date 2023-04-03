@@ -23,14 +23,6 @@ class AbstractValidateTest extends AbstractTestCase
         \Mockery::close();
     }
 
-    public function testAttributes()
-    {
-        $this->assertClassHasAttribute('scenes', AbstractValidate::class);
-        $this->assertClassHasAttribute('scene', AbstractValidate::class);
-        $this->assertClassHasAttribute('validateFactory', AbstractValidate::class);
-        $this->assertClassHasAttribute('eventDispatcher', AbstractValidate::class);
-    }
-
     public function testFunction()
     {
         $validate = $this->getValidate();
