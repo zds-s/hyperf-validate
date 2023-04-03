@@ -13,7 +13,7 @@ use Attribute;
 use Hyperf\Di\Annotation\AbstractAnnotation;
 use Hyperf\Di\Exception\NotFoundException;
 
-#[Attribute(Attribute::TARGET_CLASS | Attribute::TARGET_METHOD)]
+#[\Attribute(\Attribute::TARGET_CLASS | \Attribute::TARGET_METHOD)]
 class Validate extends AbstractAnnotation
 {
     /**
