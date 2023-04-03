@@ -15,15 +15,15 @@ use Attribute;
 use Hyperf\Di\Annotation\AbstractAnnotation;
 use Hyperf\Di\Exception\NotFoundException;
 
-#[Attribute(Attribute::TARGET_CLASS)]
+#[\Attribute(\Attribute::TARGET_CLASS)]
 class Validate extends AbstractAnnotation
 {
     /**
      * Validate constructor.
      * @param string $validate 验证器类名
-     * @param array|string $scene 验证场景
+     * @param null|array|string $scene 验证场景
      */
-    public function __construct(public string $validate, public array|string $scene = [])
+    public function __construct(public string $validate, public array|string|null $scene = null)
     {
     }
 

@@ -27,8 +27,7 @@ class RequestHandle implements \DeathSatan\Hyperf\Validate\Contract\CustomHandle
     public function __construct(
         RequestInterface $request,
         ResponseInterface $response
-    )
-    {
+    ) {
         $this->request = $request;
         $this->response = $response;
     }
@@ -36,7 +35,7 @@ class RequestHandle implements \DeathSatan\Hyperf\Validate\Contract\CustomHandle
     /**
      * {@inheritDoc}
      */
-    public function provide(object $current, AbstractValidate $validate, string $scene = null): array
+    public function provide(object $current, AbstractValidate $validate, array|null|string $scene = null): array
     {
         return $this->request->all();
     }

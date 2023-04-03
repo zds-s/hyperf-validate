@@ -97,7 +97,7 @@ class ControllerValidate extends AbstractAspect
     /**
      * 获取要验证的数据.
      */
-    protected function handleData(AbstractValidate $validate, object $current, ?string $scene): array
+    protected function handleData(AbstractValidate $validate, object $current, string|array|null $scene): array
     {
         return $this
             ->parseHandle(
