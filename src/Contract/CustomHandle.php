@@ -2,10 +2,12 @@
 
 declare(strict_types=1);
 /**
- * This file is part of Hyperf Extend.
+ * This file is part of Hyperf.
  *
- * @link     https://www.cnblogs.com/death-satan
- * @license  https://github.com/Death-Satan/hyperf-validate
+ * @link     https://www.hyperf.io
+ * @document https://hyperf.wiki
+ * @contact  group@hyperf.io
+ * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
  */
 namespace DeathSatan\Hyperf\Validate\Contract;
 

@@ -2,10 +2,12 @@
 
 declare(strict_types=1);
 /**
- * This file is part of Hyperf Extend.
+ * This file is part of Hyperf.
  *
- * @link     https://www.cnblogs.com/death-satan
- * @license  https://github.com/Death-Satan/hyperf-validate
+ * @link     https://www.hyperf.io
+ * @document https://hyperf.wiki
+ * @contact  group@hyperf.io
+ * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
  */
 namespace DeathSatan\Hyperf\Validate\Aspect;
 
@@ -24,20 +26,18 @@ use Psr\Container\ContainerInterface;
 
 class ControllerValidate extends AbstractAspect
 {
-    public $annotations = [
+    public array $annotations = [
         Validate::class,
     ];
 
     /**
      * @var Container|ContainerInterface
      */
-    protected $container;
+    protected Container|ContainerInterface $container;
 
-    protected $request;
+    protected RequestInterface $request;
 
-    protected $response;
-
-    protected $config;
+    protected ResponseInterface $response;
 
     public function __construct(
         ContainerInterface $container,
@@ -97,11 +97,13 @@ class ControllerValidate extends AbstractAspect
     /**
      * 获取要验证的数据.
      */
-    protected function handleData(AbstractValidate $validate, object $current, ?string $scene): array
+    protected function handleData(AbstractValidate $validate, object $current, string|array|null $scene): array
     {
-        $customHandle = $this->config('customHandle', \DeathSatan\Hyperf\Validate\Driver\RequestHandle::class);
-        $handle = $this->parseHandle($customHandle);
-        return $handle->provide($current, $validate, $scene);
+        return $this
+            ->parseHandle(
+                $this->config('customHandle', \DeathSatan\Hyperf\Validate\Driver\RequestHandle::class)
+            )
+            ->provide($current, $validate, $scene);
     }
 
     protected function config(string $key = null, $default = null)

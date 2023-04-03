@@ -2,46 +2,29 @@
 
 declare(strict_types=1);
 /**
- * This file is part of Hyperf Extend.
+ * This file is part of Hyperf.
  *
- * @link     https://www.cnblogs.com/death-satan
- * @license  https://github.com/Death-Satan/hyperf-validate
+ * @link     https://www.hyperf.io
+ * @document https://hyperf.wiki
+ * @contact  group@hyperf.io
+ * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
  */
 namespace DeathSatan\Hyperf\Validate\Annotation;
 
+use Attribute;
 use Hyperf\Di\Annotation\AbstractAnnotation;
 use Hyperf\Di\Exception\NotFoundException;
 
-/**
- * @Annotation
- * @Target({"CLASS", "METHOD"})
- */
+#[\Attribute(\Attribute::TARGET_CLASS)]
 class Validate extends AbstractAnnotation
 {
     /**
-     * @var string 验证器类名
+     * Validate constructor.
+     * @param string $validate 验证器类名
+     * @param null|array|string $scene 验证场景
      */
-    public $validate;
-
-    /**
-     * @var string 场景名
-     */
-    public $scene;
-
-    /**
-     * @throws NotFoundException
-     */
-    public function __construct(...$value)
+    public function __construct(public string $validate, public array|string|null $scene = null)
     {
-        $formattedValue = $this->formatParams($value);
-        foreach ($formattedValue as $key => $val) {
-            if ($key === 'validate') {
-                $this->checkValidate($val);
-            }
-            if (property_exists($this, $key)) {
-                $this->{$key} = $val;
-            }
-        }
     }
 
     /**

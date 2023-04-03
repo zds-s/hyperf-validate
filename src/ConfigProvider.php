@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 /**
- * This file is part of Hyperf Extend.
+ * This file is part of Hyperf.
  *
- * @link     https://www.cnblogs.com/death-satan
- * @license  https://github.com/Death-Satan/hyperf-validate
+ * @link     https://www.hyperf.io
+ * @document https://hyperf.wiki
+ * @contact  group@hyperf.io
+ * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
  */
 namespace DeathSatan\Hyperf\Validate;
 
 use DeathSatan\Hyperf\Validate\Aspect\ControllerValidate;
-use DeathSatan\Hyperf\Validate\Collector\ModelValidateCollector;
 use DeathSatan\Hyperf\Validate\Commands\ValidateCommand;
-use DeathSatan\Hyperf\Validate\Listeners\ModelValidateLister;
 
 class ConfigProvider
 {
@@ -25,7 +25,6 @@ class ConfigProvider
                 ValidateCommand::class,
             ],
             'listeners' => [
-                ModelValidateLister::class,
             ],
             'aspects' => [
                 ControllerValidate::class,
@@ -34,9 +33,6 @@ class ConfigProvider
                 'scan' => [
                     'paths' => [
                         __DIR__,
-                    ],
-                    'collectors' => [
-                        ModelValidateCollector::class,
                     ],
                 ],
             ],
