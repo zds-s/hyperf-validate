@@ -82,6 +82,7 @@ class ControllerValidate extends AbstractAspect
 
     /**
      * 让hyperf container来管理handle.
+     * @param mixed $handle
      */
     protected function parseHandle($handle): CustomHandle
     {
