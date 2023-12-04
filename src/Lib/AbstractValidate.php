@@ -11,9 +11,9 @@ namespace DeathSatan\Hyperf\Validate\Lib;
 
 use DeathSatan\Hyperf\Validate\Events\BeforeDataValidate;
 use DeathSatan\Hyperf\Validate\Exceptions\ValidateException;
+use Hyperf\Collection\Arr;
 use Hyperf\Contract\ValidatorInterface;
-use Hyperf\Utils\ApplicationContext;
-use Hyperf\Utils\Arr;
+use Hyperf\Context\ApplicationContext;
 use Hyperf\Validation\Contract\ValidatorFactoryInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
 

@@ -13,14 +13,16 @@ use DeathSatan\Hyperf\Validate\Annotation\Validate;
 use DeathSatan\Hyperf\Validate\Contract\CustomHandle;
 use DeathSatan\Hyperf\Validate\Exceptions\ValidateException;
 use DeathSatan\Hyperf\Validate\Lib\AbstractValidate;
+use Hyperf\Collection\Arr;
 use Hyperf\Di\Aop\AbstractAspect;
 use Hyperf\Di\Aop\ProceedingJoinPoint;
 use Hyperf\Di\Container;
 use Hyperf\HttpServer\Contract\RequestInterface;
 use Hyperf\HttpServer\Contract\ResponseInterface;
-use Hyperf\Utils\ApplicationContext;
-use Hyperf\Utils\Arr;
+use Hyperf\Context\ApplicationContext;
 use Psr\Container\ContainerInterface;
+use function Hyperf\Config\config;
+use function Hyperf\Support\make;
 
 class ControllerValidate extends AbstractAspect
 {

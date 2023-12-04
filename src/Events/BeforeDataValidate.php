@@ -11,17 +11,17 @@ namespace DeathSatan\Hyperf\Validate\Events;
 
 class BeforeDataValidate
 {
-    public $class;
+    public string $class;
 
-    public $data;
+    public array $data;
 
-    public $messages;
+    public array $messages;
 
-    public $attributes;
+    public array $attributes;
 
-    public $rules;
+    public array $rules;
 
-    public $scene;
+    public ?string $scene;
 
     public function __construct(string $class, array &$data, array &$rules, array &$messages, array &$attributes, ?string &$scene)
     {

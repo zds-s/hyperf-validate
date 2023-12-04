@@ -9,6 +9,7 @@ declare(strict_types=1);
  */
 namespace DeathSatan\Hyperf\Validate\Driver;
 
+use DeathSatan\Hyperf\Validate\Contract\CustomHandle;
 use DeathSatan\Hyperf\Validate\Lib\AbstractValidate;
 use Hyperf\HttpServer\Contract\RequestInterface;
 use Hyperf\HttpServer\Contract\ResponseInterface;
@@ -16,7 +17,7 @@ use Hyperf\HttpServer\Contract\ResponseInterface;
 /**
  * 自定义默认数据获取器.
  */
-class RequestHandle implements \DeathSatan\Hyperf\Validate\Contract\CustomHandle
+class RequestHandle implements CustomHandle
 {
     protected $request;
 
